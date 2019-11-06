@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold',
         fontSize: 22,
+        flexWrap: 'wrap',
+        flex: 1,
     },
     idView: {
         borderRadius: 90,
@@ -64,17 +66,17 @@ const ListItem = (props) =>{
     return(
         <View style={styles.container}>
             <Image style={styles.image}
-                source={{uri: 'https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg'}}
+                source={{uri: props.imageUrl}}
             />
             <View style={styles.details}>
                 <View style={styles.upperDetails}>
-                    <Text style={styles.name}>Michael Jordan</Text>
+                    <Text style={styles.name}>{props.name}</Text>
                     <View style={styles.idView}>
                         <Text style={styles.id}>{props.id}</Text>
                     </View>
                 </View>
                 <View style={styles.urlView}>
-                    <Text style={styles.url}><Text style={styles.urlBold}>Url:</Text> https://pl.wikipedia.org/wiki/Michael_Jordan</Text>
+                    <Text style={styles.url}><Text style={styles.urlBold}>Url:</Text> {props.pageUrl}</Text>
                 </View>
             </View>
         </View>

@@ -19,10 +19,7 @@ import {
 
 import ListItem from './modules/ListItem';
 
-// const itemImageSource= 'https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg';
-// const itemName = 'Michael Jordan'
-// const itemId = 23;
-// const itemUrl = 'https://pl.wikipedia.org/wiki/Michael_Jordan';
+const dataUrl = 'https://picsum.photos/v2/list';
 
 class App extends Component{
   render(){
@@ -30,16 +27,28 @@ class App extends Component{
       <View>
         <FlatList
           data={[
-            {id: '1'},
-            {id: '2'},
-            {id: '3'},
-            {id: '4'},
-            {id: '5'},
-            {id: '6'},
-            {id: '7'},
-            {id: '8'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com', 
+            id: '1'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
+            id: '2'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
+            id: '3'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan12345y78781212313812378', 
+            pageUrl: 'whatever.com', 
+            id: '4'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michaelsadkoasdkashdsauo Jordan12345y78781212313812378', 
+            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
+            id: '5'},
           ]}
-          renderItem={({item}) => <ListItem id={item.id}/>}
+          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.imageUrl} name={item.name} pageUrl={item.pageUrl}/>}
         />
       </View>
     );
