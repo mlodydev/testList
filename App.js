@@ -10,6 +10,8 @@ import React, {Component} from 'react';
 import {
   View,
   FlatList,
+  Text,
+  ActivityIndicator,
 } from 'react-native';  
 
 import ListItem from './modules/ListItem';
@@ -22,14 +24,20 @@ class App extends Component{
 
     this.state = {
       data: null,
+      isLoading: true,
     };
   }
 
   fetchApiData(){
     fetch(DATAURL)
     .then(response => response.json())
-    .then(data => this.setState( {data} ))
-    .catch((error) => console.error(error) );
+    .then(responseJson => {
+      this.setState({
+        data: responseJson,
+        isLoading: false
+      })
+    })
+    .catch((error) => console.log(error));
   }
 
   componentDidMount(){
@@ -37,12 +45,20 @@ class App extends Component{
   }
 
   render(){
+    if(this.state.isLoading){
+      return(
+        <View>
+        <ActivityIndicator size='large' color='#058cd9'/>
+      </View>  
+      )
+    }
     return(
       <View>
         <FlatList
           data = {this.state.data}
           renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
         />
+        
       </View>
     );
   }
