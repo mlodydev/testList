@@ -12,11 +12,21 @@ import {
   FlatList,
   Text,
   ActivityIndicator,
+  StyleSheet
 } from 'react-native';  
 
 import ListItem from './modules/ListItem';
 
 const DATAURL = 'https://picsum.photos/v2/list';
+
+const styles = StyleSheet.create({
+  loadingIndicator: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 class App extends Component{
   constructor(props){
@@ -37,7 +47,7 @@ class App extends Component{
         isLoading: false
       })
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.warn(error));
   }
 
   componentDidMount(){
@@ -47,7 +57,7 @@ class App extends Component{
   render(){
     if(this.state.isLoading){
       return(
-        <View>
+        <View style={styles.loadingIndicator}>
         <ActivityIndicator size='large' color='#058cd9'/>
       </View>  
       )
@@ -58,7 +68,6 @@ class App extends Component{
           data = {this.state.data}
           renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
         />
-        
       </View>
     );
   }

@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, Image, StyleSheet} from 'react-native';
+import React, {Component} from 'react';
+import {View, Text, Image, StyleSheet, Linking} from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -63,24 +63,43 @@ const styles = StyleSheet.create({
     },
 });
 
-const ListItem = (props) =>{
-    return(
-        <View style={styles.container}>
-            <Image style={styles.image}
-                source={{uri: props.imageUrl}}
-            />
-            <View style={styles.details}>
-                <View style={styles.upperDetails}>
-                    <Text style={styles.name}>{props.name}</Text>
-                    <View style={styles.idView}>
-                        <Text style={styles.id}>{props.id}</Text>
+class ListItem extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            url: this.props.pageUrl,
+        };
+        this.onPressHandler = this.onPressHandler.bind(this);
+    }
+
+    onPressHandler(){
+        try{
+            Linking.openURL(this.state.url);
+        }
+        catch(error){
+            console.warn(error);
+        }
+    }
+
+    render(){
+        return(
+            <View style={styles.container}>
+                <Image style={styles.image}
+                    source={{uri: this.props.imageUrl}}
+                />
+                <View style={styles.details}>
+                    <View style={styles.upperDetails}>
+                        <Text style={styles.name}>{this.props.name}</Text>
+                        <View style={styles.idView}>
+                            <Text style={styles.id}>{this.props.id}</Text>
+                        </View>
+                    </View>
+                    <View style={styles.urlView}>
+                        <Text onPress={this.onPressHandler} style={styles.url}><Text style={styles.urlBold}>Url:</Text> {this.props.pageUrl}</Text>
                     </View>
                 </View>
-                <View style={styles.urlView}>
-                    <Text style={styles.url}><Text style={styles.urlBold}>Url:</Text> {props.pageUrl}</Text>
-                </View>
             </View>
-        </View>
-    );
+        );
+    }
 };
 export default ListItem;    
