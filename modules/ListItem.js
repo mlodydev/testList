@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
         width: 75,
         height: 75,
         borderRadius: 10,
-        
+        alignSelf: 'center',
     },
     details: {
         flex: 1,
