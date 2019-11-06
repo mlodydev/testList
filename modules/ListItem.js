@@ -34,6 +34,8 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold',
         fontSize: 22,
+        flexWrap: 'wrap',
+        flex: 1,
     },
     idView: {
         borderRadius: 90,
