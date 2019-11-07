@@ -45,14 +45,16 @@ class App extends Component{
   }
 
   sortDataById(){
-    const newData = this.state.data.sort((a,b) => a.id - b.id);
+    const newData = [...this.state.data];
+    newData.sort((a,b) => a.id - b.id);
     this.setState({
       data: newData,
     });
   }
   
   sortDataByAuthor(){
-    const newData = this.state.data.sort((a,b) => {
+    const newData = [...this.state.data];
+    newData.sort((a,b) => {
       if(a.author > b.author) return 1;
       else if(a.author < b.author) return -1;
       else return 0;
@@ -69,7 +71,6 @@ class App extends Component{
       </View>
     : <FlatList
         data = {this.state.data}
-        extraData = {this.state}
         renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
       />
 
@@ -96,10 +97,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   body: {
-    flex: 10,
+    flex: 1,
   },
   buttons: {
-    flex: 1,
+    flex: 0.1,
   },
 });
 
