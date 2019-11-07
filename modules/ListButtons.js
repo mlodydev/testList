@@ -12,9 +12,9 @@ class ListButtons extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <MyButton title='Refresh list'/>
-                <MyButton title='Sort by author'/>
-                <MyButton title='Sort by id'/>
+                <MyButton onPress={this.props.onPressRefresh} title='Refresh list'/>
+                <MyButton onPress={this.props.onPressSortAuthor} title='Sort by author'/>
+                <MyButton onPress={this.props.onPressSortId} title='Sort by id'/>
             </View>
         );
     }

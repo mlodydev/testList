@@ -8,7 +8,7 @@ class MyButton extends Component{
 
     render(){
         return(
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={this.props.onPress} style={styles.button}>
                 <Text style={styles.btnText}>{this.props.title}</Text>
             </TouchableOpacity>
         );
