@@ -9,20 +9,7 @@ import {
 
 import ListItem from './modules/ListItem';
 
-const DATAURL = 'https://picsum.photos/v2/list';
-
-const styles = StyleSheet.create({
-  loadingIndicator: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container:{
-    flex: 1,
-    display: 'flex',
-  },
-});
+const DATA_URL = 'https://picsum.photos/v2/list';
 
 class App extends Component{
   constructor(props){
@@ -35,7 +22,10 @@ class App extends Component{
   }
 
   fetchApiData(){
-    fetch(DATAURL)
+    this.setState({
+      isLoading: true,
+    })
+    fetch(DATA_URL)
     .then(response => response.json())
     .then(responseJson => {
       this.setState({
@@ -51,28 +41,32 @@ class App extends Component{
   }
 
   render(){
-    let currentView;
-    if(this.state.isLoading){
-      currentView = <View style={styles.loadingIndicator}>
-      <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
-    </View>
-    }
-    else{
-    currentView = <View>
-      <FlatList
-      data = {this.state.data}
-      renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+    const loadingOrList = this.state.isLoading
+    ? <View style={styles.loadingIndicator}>
+        <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
+      </View>
+    : <FlatList
+        data = {this.state.data}
+        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
       />
-    </View>
-    };
 
     return(
       <View style={styles.container}>  
-        {currentView}
+        {loadingOrList}
       </View>
     );
-
   }
 }
+
+const styles = StyleSheet.create({
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container:{
+    flex: 1,
+  },
+});
 
 export default App;
