@@ -1,58 +1,72 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
   View,
-  Text,
-  StatusBar,
   FlatList,
+  Text,
+  ActivityIndicator,
+  StyleSheet
 } from 'react-native';  
 
 import ListItem from './modules/ListItem';
 
-const dataUrl = 'https://picsum.photos/v2/list';
+const DATA_URL = 'https://picsum.photos/v2/list';
 
 class App extends Component{
+  constructor(props){
+    super(props);
+
+    this.state = {
+      data: null,
+      isLoading: false,
+    };
+  }
+
+  fetchApiData(){
+    this.setState({
+      isLoading: true,
+    })
+    fetch(DATA_URL)
+    .then(response => response.json())
+    .then(responseJson => {
+      this.setState({
+        data: responseJson,
+        isLoading: false
+      })
+    })
+    .catch((error) => console.warn(error));
+  }
+
+  componentDidMount(){
+    this.fetchApiData();
+  }
+
   render(){
+    const body = this.state.isLoading
+    ? <View style={styles.loadingIndicator}>
+        <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
+      </View>
+    : <FlatList
+        data = {this.state.data}
+        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+      />
+
     return(
-      <View>
-        <FlatList
-          data={[
-            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
-            name: 'Michael Jordan', 
-            pageUrl: 'whatever.com', 
-            id: '1'},
-            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
-            name: 'Michael Jordan', 
-            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
-            id: '2'},
-            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
-            name: 'Michael Jordan', 
-            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
-            id: '3'},
-            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
-            name: 'Michael Jordan12345y78781212313812378', 
-            pageUrl: 'whatever.com', 
-            id: '4'},
-            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
-            name: 'Michaelsadkoasdkashdsauo Jordan12345y78781212313812378', 
-            pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
-            id: '5'},
-          ]}
-          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.imageUrl} name={item.name} pageUrl={item.pageUrl}/>}
-        />
+      <View style={styles.container}>  
+        {body}
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  loadingIndicator: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container:{
+    flex: 1,
+  },
+});
 
 export default App;
