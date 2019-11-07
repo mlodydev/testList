@@ -1,19 +1,8 @@
 import React, {Component} from 'react';
-import {View, Button, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
+import MyButton from './MyButton';
 
-const styles = StyleSheet.create({
-    container:{
-        flex: 1,
-        flexDirection: 'row',
-        alignItems: 'stretch',
-        position: 'absolute',
-        bottom: 0,
-
-    },
-    button: {
-        flex: 1,
-    }
-});
+const screenWidth = Dimensions.get('screen').width;
 
 class ListButtons extends Component{
     constructor(props){
@@ -23,12 +12,31 @@ class ListButtons extends Component{
     render(){
         return(
             <View style={styles.container}>
-                <Button style={styles.button} title='Refresh list'/>
-                <Button style={styles.button} title='Sort by author'/>
-                <Button style={styles.button} title='Sort by id'/>
+                <MyButton title='Refresh list'/>
+                <MyButton title='Sort by author'/>
+                <MyButton title='Sort by id'/>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    container:{
+        flex: 1,
+        flexDirection: 'row',
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: 'white',
+        width: screenWidth,
+        justifyContent: 'space-around',
+        padding: 3,
+        borderTopColor: '#058cd9',
+        borderTopWidth: 1,
+    },
+    button: {
+        color: '#058cd9',
+        paddingVertical: 5,
+    }
+});
 
 export default ListButtons;

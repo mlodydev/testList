@@ -25,7 +25,7 @@ const dataUrl = 'https://picsum.photos/v2/list';
 class App extends Component{
   render(){
     return(
-      <View style={{display: 'flex', flex: 1}}>
+      <View style={{flex: 1}}>
         <FlatList
           data={[
             {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
@@ -48,6 +48,18 @@ class App extends Component{
             name: 'Michaelsadkoasdkashdsauo Jordan12345y78781212313812378', 
             pageUrl: 'whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com/whatever.com', 
             id: '5'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com', 
+            id: '6'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com', 
+            id: '7'},
+            {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
+            name: 'Michael Jordan', 
+            pageUrl: 'whatever.com', 
+            id: '8'},
           ]}
           renderItem={({item}) => <ListItem id={item.id} imageUrl={item.imageUrl} name={item.name} pageUrl={item.pageUrl}/>}
         />
