@@ -74,9 +74,13 @@ class App extends Component{
       />
 
     return(
-      <View style={styles.body}>  
-        {body}
-        <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />
+      <View style={styles.container}>
+        <View style={styles.body}>
+          {body}
+        </View>
+        <View style={styles.buttons}>
+          <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
+        </View>
       </View>
     );
   }
@@ -88,7 +92,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  body:{
+  container:{
+    flex: 1,
+  },
+  body: {
+    flex: 10,
+  },
+  buttons: {
     flex: 1,
   },
 });
