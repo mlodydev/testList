@@ -18,13 +18,14 @@ import {
 } from 'react-native';  
 
 import ListItem from './modules/ListItem';
+import ListButtons from './modules/ListButtons';
 
 const dataUrl = 'https://picsum.photos/v2/list';
 
 class App extends Component{
   render(){
     return(
-      <View>
+      <View style={{display: 'flex', flex: 1}}>
         <FlatList
           data={[
             {imageUrl: "https://statics.sportskeeda.com/editor/2018/03/a4a7b-1520474015-800.jpg", 
@@ -50,6 +51,7 @@ class App extends Component{
           ]}
           renderItem={({item}) => <ListItem id={item.id} imageUrl={item.imageUrl} name={item.name} pageUrl={item.pageUrl}/>}
         />
+        <ListButtons />
       </View>
     );
   }
