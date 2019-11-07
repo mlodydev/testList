@@ -17,7 +17,7 @@ class App extends Component{
 
     this.state = {
       data: null,
-      isLoading: true,
+      isLoading: false,
     };
   }
 
@@ -41,7 +41,7 @@ class App extends Component{
   }
 
   render(){
-    const loadingOrList = this.state.isLoading
+    const body = this.state.isLoading
     ? <View style={styles.loadingIndicator}>
         <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
       </View>
@@ -52,7 +52,7 @@ class App extends Component{
 
     return(
       <View style={styles.container}>  
-        {loadingOrList}
+        {body}
       </View>
     );
   }
