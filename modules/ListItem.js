@@ -66,15 +66,12 @@ const styles = StyleSheet.create({
 class ListItem extends Component{
     constructor(props){
         super(props);
-        this.state={
-            url: this.props.pageUrl, //props is not recommended to be in state
-        };
         this.onPressHandler = this.onPressHandler.bind(this);
     }
 
     onPressHandler(){
         try{
-            Linking.openURL(this.state.url);
+            Linking.openURL(this.props.pageUrl);
         }
         catch(error){
             console.warn(error);
