@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, {Component} from 'react';
 import {
   View,
@@ -25,6 +17,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  container:{
+    flex: 1,
+    display: 'flex',
   },
 });
 
@@ -55,21 +51,27 @@ class App extends Component{
   }
 
   render(){
+    let currentView;
     if(this.state.isLoading){
-      return(
-        <View style={styles.loadingIndicator}>
-        <ActivityIndicator size='large' color='#058cd9'/>
-      </View>  
-      )
+      currentView = <View style={styles.loadingIndicator}>
+      <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
+    </View>
     }
+    else{
+    currentView = <View>
+      <FlatList
+      data = {this.state.data}
+      renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+      />
+    </View>
+    };
+
     return(
-      <View>
-        <FlatList
-          data = {this.state.data}
-          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-        />
+      <View style={styles.container}>  
+        {currentView}
       </View>
     );
+
   }
 }
 
