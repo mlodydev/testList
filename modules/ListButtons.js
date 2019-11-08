@@ -6,11 +6,11 @@ const screenWidth = Dimensions.get('screen').width;
 
 const ListButtons = (props) =>{
     return(
-            <View style={styles.container}>
-                <MyButton onPress={props.onPressRefresh} title='Refresh list'/>
-                <MyButton onPress={props.onPressSortAuthor} title='Sort by author'/>
-                <MyButton onPress={props.onPressSortId} title='Sort by id'/>
-            </View>
+        <View style={styles.container}>
+            <MyButton onPress={props.onPressRefresh} title='Refresh list'/>
+            <MyButton onPress={props.onPressSortAuthor} title='Sort by author'/>
+            <MyButton onPress={props.onPressSortId} title='Sort by id'/>
+        </View>
     );
 }
 
