@@ -1,37 +1,31 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, Text, Image, StyleSheet, Linking} from 'react-native';
 
-class ListItem extends Component{
-    constructor(props){
-        super(props);
-        this.onPressHandler = this.onPressHandler.bind(this);
-    }
+const ListItem =(props)=>{
 
-    onPressHandler(){
-        Linking.openURL(this.props.pageUrl).catch((error) => console.warn(error));
+    const onPressHandler=()=>{
+        Linking.openURL(props.pageUrl).catch((error) => console.warn(error));
         
     }
 
-    render(){
-        return(
-            <View style={styles.container}>
-                <Image style={styles.image}
-                    source={{uri: this.props.imageUrl}}
-                />
-                <View style={styles.details}>
-                    <View style={styles.upperDetails}>
-                        <Text style={styles.name}>{this.props.name}</Text>
-                        <View style={styles.idView}>
-                            <Text style={styles.id}>{this.props.id}</Text>
-                        </View>
-                    </View>
-                    <View style={styles.urlView}>
-                        <Text onPress={this.onPressHandler} style={styles.url}><Text style={styles.urlBold}>Url:</Text> {this.props.pageUrl}</Text>
+    return(
+        <View style={styles.container}>
+            <Image style={styles.image}
+                source={{uri: props.imageUrl}}
+            />
+            <View style={styles.details}>
+                <View style={styles.upperDetails}>
+                    <Text style={styles.name}>{props.name}</Text>
+                    <View style={styles.idView}>
+                        <Text style={styles.id}>{props.id}</Text>
                     </View>
                 </View>
+                <View style={styles.urlView}>
+                    <Text onPress={onPressHandler} style={styles.url}><Text style={styles.urlBold}>Url:</Text> {props.pageUrl}</Text>
+                </View>
             </View>
-        );
-    }
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
