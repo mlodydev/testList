@@ -5,25 +5,22 @@ import {
   Text,
   ActivityIndicator,
   StyleSheet
-} from 'react-native';  
+} from 'react-native';
 
-class App extends Component{
-  constructor(props){
-    super(props);
-  }
+import ListButtons from './modules/ListButtons';
+import ListComp from './modules/ListComp';
 
-  render(){
-    return(
-      <View style={styles.container}>
-        <View style={styles.body}>
-          {body}
-        </View>
-        <View style={styles.buttons}>
-          <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
-        </View>
+const App = () =>{
+  return(
+    <View style={styles.container}>
+      <View style={styles.body}>
+        <ListComp />
       </View>
-    );
-  }
+      <View style={styles.buttons}>
+        <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
