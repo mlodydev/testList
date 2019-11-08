@@ -8,6 +8,7 @@ import {
 } from 'react-native';  
 
 import ListItem from './modules/ListItem';
+import ListButtons from './modules/ListButtons';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
@@ -19,6 +20,9 @@ class App extends Component{
       data: null,
       isLoading: false,
     };
+    this.fetchApiData = this.fetchApiData.bind(this);
+    this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
+    this.sortDataById = this.sortDataById.bind(this);
   }
 
   fetchApiData(){
@@ -40,6 +44,26 @@ class App extends Component{
     this.fetchApiData();
   }
 
+  sortDataById(){
+    const newData = [...this.state.data];
+    newData.sort((a,b) => a.id - b.id);
+    this.setState({
+      data: newData,
+    });
+  }
+  
+  sortDataByAuthor(){
+    const newData = [...this.state.data];
+    newData.sort((a,b) => {
+      if(a.author > b.author) return 1;
+      else if(a.author < b.author) return -1;
+      else return 0;
+    });
+    this.setState({
+      data: newData,
+    });
+  }
+
   render(){
     const body = this.state.isLoading
     ? <View style={styles.loadingIndicator}>
@@ -51,8 +75,13 @@ class App extends Component{
       />
 
     return(
-      <View style={styles.container}>  
-        {body}
+      <View style={styles.container}>
+        <View style={styles.body}>
+          {body}
+        </View>
+        <View style={styles.buttons}>
+          <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
+        </View>
       </View>
     );
   }
@@ -66,6 +95,12 @@ const styles = StyleSheet.create({
   },
   container:{
     flex: 1,
+  },
+  body: {
+    flex: 1,
+  },
+  buttons: {
+    flex: 0.1,
   },
 });
 
