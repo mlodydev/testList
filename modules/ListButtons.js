@@ -1,23 +1,17 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import MyButton from './MyButton';
 
 const screenWidth = Dimensions.get('screen').width;
 
-class ListButtons extends Component{
-    constructor(props){
-        super(props);
-    };
-
-    render(){
-        return(
+const ListButtons = (props) =>{
+    return(
             <View style={styles.container}>
-                <MyButton onPress={this.props.onPressRefresh} title='Refresh list'/>
-                <MyButton onPress={this.props.onPressSortAuthor} title='Sort by author'/>
-                <MyButton onPress={this.props.onPressSortId} title='Sort by id'/>
+                <MyButton onPress={props.onPressRefresh} title='Refresh list'/>
+                <MyButton onPress={props.onPressSortAuthor} title='Sort by author'/>
+                <MyButton onPress={props.onPressSortId} title='Sort by id'/>
             </View>
-        );
-    }
+    );
 }
 
 const styles = StyleSheet.create({
