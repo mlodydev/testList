@@ -23,7 +23,8 @@ class App extends Component{
     this.fetchApiData = this.fetchApiData.bind(this);
     this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
     this.sortDataById = this.sortDataById.bind(this);
-  }
+    this.handleRefresh = this.handleRefresh.bind(this);
+  };
 
   fetchApiData(){
     this.setState({
@@ -34,15 +35,15 @@ class App extends Component{
     .then(responseJson => {
       this.setState({
         data: responseJson,
-        isLoading: false
+        isLoading: false,
       })
     })
     .catch((error) => console.warn(error));
-  }
+  };
 
   componentDidMount(){
     this.fetchApiData();
-  }
+  };
 
   sortDataById(){
     const newData = [...this.state.data];
@@ -50,7 +51,7 @@ class App extends Component{
     this.setState({
       data: newData,
     });
-  }
+  };
   
   sortDataByAuthor(){
     const newData = [...this.state.data];
@@ -62,22 +63,39 @@ class App extends Component{
     this.setState({
       data: newData,
     });
-  }
+  };
+
+  handleRefresh(){
+    this.setState({
+      refreshing: true,
+    }, ()=> this.fetchApiData()
+    );
+  };
 
   render(){
-    const body = this.state.isLoading
-    ? <View style={styles.loadingIndicator}>
-        <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
-      </View>
-    : <FlatList
-        data = {this.state.data}
-        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-      />
-
+    // const body = this.state.isLoading
+    // ? <View style={styles.loadingIndicator}>
+    //     <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
+    //   </View>
+    // : <FlatList
+    // const body =
+    // <FlatList
+    //     data = {this.state.data}
+    //     refreshing = {this.state.isLoading}
+    //     onRefresh = {this.handleRefresh}
+    //     renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+    //   />
     return(
       <View style={styles.container}>
         <View style={styles.body}>
-          {body}
+          {/* {body} */}
+          <FlatList
+        data = {this.state.data}
+        refreshing = {this.state.isLoading}
+        onRefresh = {this.handleRefresh}
+        show = {!this.state.isLoading}
+        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+      />
         </View>
         <View style={styles.buttons}>
           <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
