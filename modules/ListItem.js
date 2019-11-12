@@ -8,8 +8,7 @@ class ListItem extends Component{
     }
 
     onPressHandler(){
-        Linking.openURL(this.props.pageUrl).catch((error) => console.warn(error));
-        
+        Linking.openURL(this.props.pageUrl).catch((error) => console.warn(error));   
     }
 
     render(){
@@ -65,10 +64,10 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },  
     name: {
+        flex: 1,
         fontWeight: 'bold',
         fontSize: 22,
         flexWrap: 'wrap',
-        flex: 1,
     },
     idView: {
         borderRadius: 90,

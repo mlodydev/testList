@@ -2,12 +2,11 @@ import React, {Component} from 'react';
 import {
   View,
   FlatList,
-  ActivityIndicator,
   StyleSheet
 } from 'react-native';  
 
-import ListItem from './modules/ListItem';
-import ListButtons from './modules/ListButtons';
+import ListItem from './ListItem';
+import ListButtons from './ListButtons';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
@@ -22,6 +21,9 @@ class ListComp extends Component{
     this.fetchApiData = this.fetchApiData.bind(this);
     this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
     this.sortDataById = this.sortDataById.bind(this);
+    this.onPressHandlerRefresh = this.onPressHandlerRefresh.bind(this);
+    this.onPressHandlerSortAuthor = this.onPressHandlerSortAuthor.bind(this);
+    this.onPressHandlerSortId = this.onPressHandlerSortId.bind(this);
   }
 
   fetchApiData(){
@@ -63,23 +65,31 @@ class ListComp extends Component{
     });
   }
 
-  render(){
-    const body = this.state.isLoading
-    ? <View style={styles.loadingIndicator}>
-        <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
-      </View>
-    : <FlatList
-        data = {this.state.data}
-        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-      />
+  onPressHandlerRefresh(){
+    this.fetchApiData();
+  }
 
+  onPressHandlerSortAuthor(){
+    this.sortDataByAuthor();
+  }
+
+  onPressHandlerSortId(){
+    this.sortDataById();
+  }
+
+  render(){
     return(
       <View style={styles.container}>
-        <View style={styles.body}>
-          {body}
+        <View style={styles.list}>
+          <FlatList
+            data = {this.state.data}
+            renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+            refreshing={this.state.isLoading}
+            onRefresh={this.onPressHandlerRefresh}
+          />
         </View>
         <View style={styles.buttons}>
-          <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
+          <ListButtons onPressRefresh={this.onPressHandlerRefresh} onPressSortAuthor={this.onPressHandlerSortAuthor} onPressSortId={this.onPressHandlerSortId} />  
         </View>
       </View>
     );
@@ -87,15 +97,10 @@ class ListComp extends Component{
 }
 
 const styles = StyleSheet.create({
-  loadingIndicator: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container:{
     flex: 1,
   },
-  body: {
+  list: {
     flex: 1,
   },
   buttons: {
