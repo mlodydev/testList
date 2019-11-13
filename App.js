@@ -9,9 +9,11 @@ import {
 
 import ListComp from './modules/ListComp';
 
+const DATA_URL = 'https://picsum.photos/v2/list';
+
 const App = () =>{
   return(
-    <ListComp />
+    <ListComp url={DATA_URL}/>
   );
 }
 

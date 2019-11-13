@@ -9,8 +9,6 @@ import {
 import ListItem from './ListItem';
 import ListButtons from './ListButtons';
 
-const DATA_URL = 'https://picsum.photos/v2/list';
-
 const EmptyListComponent =()=>(
   <View style={styles.emptyList}>
     <Text>
@@ -27,6 +25,8 @@ class ListComp extends Component{
       data: null,
       isLoading: false,
     };
+
+
     this.fetchApiData = this.fetchApiData.bind(this);
     this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
     this.sortDataById = this.sortDataById.bind(this);
@@ -39,7 +39,7 @@ class ListComp extends Component{
     this.setState({
       isLoading: true,
     })
-    fetch(DATA_URL)
+    fetch(this.props.url)
     .then(response => response.json())
     .then(responseJson => {
       this.setState({
