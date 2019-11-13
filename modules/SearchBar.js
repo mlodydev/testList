@@ -19,9 +19,6 @@ const SearchBar = (props) => {
                 onChangeText = {props.onChangeHandler}
                 style={styles.input}
             />
-            {/* <TouchableOpacity style={styles.hideIcon} onPress={props.onPressCancel}>
-                <Text style={styles.btnText}>Hide</Text>
-            </TouchableOpacity> */}
             <MyButton title="hide" onPress={props.onPressCancel}/>
         </KeyboardAvoidingView>
     );
@@ -34,19 +31,12 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderTopColor: '#058cd9',
         padding: 3,
+        marginRight: 15,
     },
     input: {
         flex: 1,
-    },  
-    hideIcon: {
-        flex: 0.1,
-        paddingVertical: 15,
-        backgroundColor: '#058cd9',
-        paddingHorizontal: 15,
-    },
-    btnText:{
-        color: 'white',
-        fontSize: 16,
+        padding: 0,
+        paddingLeft: 5,
     },
 });
 
