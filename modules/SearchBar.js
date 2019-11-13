@@ -2,17 +2,14 @@ import React from 'react';
 import { 
     View, 
     TextInput, 
-    TouchableOpacity,
-    Text,
     StyleSheet,
-    KeyboardAvoidingView,
 } from 'react-native';
 
 import MyButton from './MyButton';
 
 const SearchBar = (props) => {
     return(
-        <KeyboardAvoidingView style={styles.container}>
+        <View style={styles.container}>
             <TextInput
                 clearButtonMode = 'always'
                 placeholder="Type..."
@@ -20,7 +17,7 @@ const SearchBar = (props) => {
                 style={styles.input}
             />
             <MyButton title="hide" onPress={props.onPressCancel}/>
-        </KeyboardAvoidingView>
+        </View>
     );
 }
 
