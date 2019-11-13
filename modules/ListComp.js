@@ -102,7 +102,11 @@ class ListComp extends Component{
           />
         </View>
         <View style={styles.buttons}>
-          <ListButtons onPressRefresh={this.onPressHandlerRefresh} onPressSortAuthor={this.onPressHandlerSortAuthor} onPressSortId={this.onPressHandlerSortId} />  
+          <ListButtons 
+            onPressRefresh={this.onPressHandlerRefresh} 
+            onPressSortAuthor={this.onPressHandlerSortAuthor} 
+            onPressSortId={this.onPressHandlerSortId} 
+            />  
         </View>
       </View>
     );
@@ -126,8 +130,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignSelf: 'center',
-    // borderColor: 'black',
-    // borderWidth: 1,
   },
 });
 
