@@ -112,24 +112,22 @@ class ListComp extends Component{
 const styles = StyleSheet.create({
   container:{
     flex: 1,
-    // alignSelf: 'stretch',
-    // justifyContent: 'center',
   },
   listView: {
     flex: 1,
-    // justifyContent: 'center',
   },  
   list: {
-    // flex: 1,
-    flex: 1,
-    justifyContent: 'center',
+    flexGrow: 1,
   },
   buttons: {
     flex: 0.1,
   },
   emptyList: {
     flex: 1,
+    justifyContent: 'center',
     alignSelf: 'center',
+    // borderColor: 'black',
+    // borderWidth: 1,
   },
 });
 
