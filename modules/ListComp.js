@@ -30,6 +30,7 @@ class ListComp extends Component{
       filterText: '',
     };
 
+    //binding
 
     this.fetchApiData = this.fetchApiData.bind(this);
     this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
@@ -70,6 +71,7 @@ class ListComp extends Component{
     newData.sort((a,b) => a.id - b.id);
     this.setState({
       data: newData,
+      filterData: newData,
     });
   }
   
@@ -82,6 +84,7 @@ class ListComp extends Component{
     });
     this.setState({
       data: newData,
+      filterData: newData,
     });
   }
 
@@ -111,7 +114,6 @@ class ListComp extends Component{
   onSearchChangeText(text){
     this.setState({filterText: text});
     this.filterByAuthor(text);
-    // console.warn(text);
   }
 
   onPressHandlerSearch(){
@@ -131,6 +133,8 @@ class ListComp extends Component{
     this.onSearchChangeText('');
   }
 
+  //render
+
   render(){
    
     const bottomMenu = this.state.showSearchBar
@@ -140,9 +144,9 @@ class ListComp extends Component{
           value={this.state.filterText}
         />
       : <ListButtons 
-      onPressSearch={this.onPressHandlerSearch} 
-      onPressSortAuthor={this.onPressHandlerSortAuthor} 
-      onPressSortId={this.onPressHandlerSortId} 
+      onPressSearch={this.onPressHandlerSearch}
+      onPressSortAuthor={this.onPressHandlerSortAuthor}
+      onPressSortId={this.onPressHandlerSortId}
       />  
 
     return(

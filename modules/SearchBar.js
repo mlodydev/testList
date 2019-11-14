@@ -16,7 +16,7 @@ const SearchBar = (props) => {
                 onChangeText = {props.onChangeHandler}
                 style={styles.input}
             />
-            <MyButton title="hide" onPress={props.onPressCancel}/>
+            <MyButton title="back" onPress={props.onPressCancel}/>
         </View>
     );
 }
@@ -24,11 +24,14 @@ const SearchBar = (props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        position: 'absolute',
+        bottom: 0,
+        backgroundColor: 'white',
         flexDirection: 'row',
         borderTopWidth: 1,
         borderTopColor: '#058cd9',
         padding: 3,
-        marginRight: 15,
+        paddingRight: 15,
     },
     input: {
         flex: 1,
