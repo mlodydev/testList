@@ -1,15 +1,14 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
   Text,
   FlatList,
-  StyleSheet
-} from 'react-native';  
+  StyleSheet,
+} from 'react-native';
 
 import ListItem from './ListItem';
 import ListButtons from './ListButtons';
-
-const DATA_URL = 'https://picsum.photos/v2/list';
+import SearchBar from './SearchBar';
 
 const EmptyListComponent =()=>(
   <View style={styles.emptyList}>
@@ -25,25 +24,36 @@ class ListComp extends Component{
 
     this.state = {
       data: null,
+      filterData: null,
       isLoading: false,
+      showSearchBar: false,
+      filterText: '',
     };
+
+    //binding
+
     this.fetchApiData = this.fetchApiData.bind(this);
     this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
     this.sortDataById = this.sortDataById.bind(this);
-    this.onPressHandlerRefresh = this.onPressHandlerRefresh.bind(this);
+    this.refreshHandler = this.refreshHandler.bind(this);
     this.onPressHandlerSortAuthor = this.onPressHandlerSortAuthor.bind(this);
     this.onPressHandlerSortId = this.onPressHandlerSortId.bind(this);
+    this.onPressHandlerSearch = this.onPressHandlerSearch.bind(this);
+    this.onPressHandlerCancel = this.onPressHandlerCancel.bind(this);
+    this.onSearchChangeText = this.onSearchChangeText.bind(this);
+    this.filterByAuthor = this.filterByAuthor.bind(this);
   }
 
   fetchApiData(){
     this.setState({
       isLoading: true,
     })
-    fetch(DATA_URL)
+    fetch(this.props.url)
     .then(response => response.json())
     .then(responseJson => {
       this.setState({
         data: responseJson,
+        filterData: responseJson,
         isLoading: false
       })
     })
@@ -54,11 +64,14 @@ class ListComp extends Component{
     this.fetchApiData();
   }
 
+  //Sorting
+
   sortDataById(){
     const newData = [...this.state.data];
     newData.sort((a,b) => a.id - b.id);
     this.setState({
       data: newData,
+      filterData: newData,
     });
   }
   
@@ -71,11 +84,40 @@ class ListComp extends Component{
     });
     this.setState({
       data: newData,
+      filterData: newData,
     });
   }
 
-  onPressHandlerRefresh(){
+  //Filtering
+
+  filterByAuthor(text){
+    
+    const newData = [...this.state.data];
+    const newFilteredData = newData.filter(item =>{
+      const textData = text.toUpperCase();
+      const itemData = item.author.toUpperCase();
+
+      return itemData.indexOf(textData) > -1;
+    });
+    
+    this.setState({
+      filterData: newFilteredData,
+    });
+  }
+
+  //Event Handlers
+
+  refreshHandler(){
     this.fetchApiData();
+  }
+
+  onSearchChangeText(text){
+    this.setState({filterText: text});
+    this.filterByAuthor(text);
+  }
+
+  onPressHandlerSearch(){
+    this.setState({showSearchBar: true});
   }
 
   onPressHandlerSortAuthor(){
@@ -86,27 +128,41 @@ class ListComp extends Component{
     this.sortDataById();
   }
 
-  
+  onPressHandlerCancel(){
+    this.setState({showSearchBar: false});
+    this.onSearchChangeText('');
+  }
+
+  //render
 
   render(){
+   
+    const bottomMenu = this.state.showSearchBar
+      ? <SearchBar 
+          onPressCancel = {this.onPressHandlerCancel}
+          onChangeHandler = {(text)=>this.onSearchChangeText(text)}
+          value={this.state.filterText}
+        />
+      : <ListButtons 
+      onPressSearch={this.onPressHandlerSearch}
+      onPressSortAuthor={this.onPressHandlerSortAuthor}
+      onPressSortId={this.onPressHandlerSortId}
+      />  
+
     return(
       <View style={styles.container}>
         <View style={styles.listView}>
           <FlatList
-            data = {this.state.data}
+            data = {this.state.filterData}
             contentContainerStyle = {styles.list}
             renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
             refreshing={this.state.isLoading}
-            onRefresh={this.onPressHandlerRefresh}
+            onRefresh={this.refreshHandler}
             ListEmptyComponent = {<EmptyListComponent/>}
           />
         </View>
         <View style={styles.buttons}>
-          <ListButtons 
-            onPressRefresh={this.onPressHandlerRefresh} 
-            onPressSortAuthor={this.onPressHandlerSortAuthor} 
-            onPressSortId={this.onPressHandlerSortId} 
-            />  
+        {bottomMenu}
         </View>
       </View>
     );
