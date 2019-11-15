@@ -13,7 +13,7 @@ const SearchBar = (props) => {
             <TextInput
                 clearButtonMode = 'always'
                 placeholder="Type..."
-                onChangeText = {props.onChangeHandler}
+                onChangeText = {props.onChangeText}
                 style={styles.input}
             />
             <MyButton title="back" onPress={props.onPressCancel}/>

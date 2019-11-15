@@ -19,71 +19,83 @@ const EmptyListComponent =()=>(
     </View>
   );
 
-export default ListCompHooks = (props) =>{
-    const [isLoading, setIsLoading] = useState(props.isLoading);
-    const [showSearchBar, setShowSearchBar] = useState(false);
-    const [filterText, setFilterText] = useState('');
-    const [filterData, setFilterData] = useState(props.data);   
+const ListCompHooks = (props) =>{
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [filterText, setFilterText] = useState('');
+  const [filterData, setFilterData] = useState(props.data);   
 
-    //sorting
+  useEffect(()=>{
+    setFilterData(props.data);
+  },[props.data]);
 
-    const sortDataById=()=>{
-        // console.warn(props.data[0].author);
-        const newData = [...props.data];
-        newData.sort((a,b) => a.id - b.id);
-        setFilterData(newData);
-    }
+  //sorting
 
-    const sortDataByAuthor=()=>{
-        const newData = [...props.data];
-        newData.sort((a,b) => {
-            if(a.author > b.author) return 1;
-            else if(a.author < b.author) return -1;
-            else return 0;
-        });
-        setFilterData(newData);
-    }    
+  const sortDataById=()=>{
+    const newData = [...props.data];
+    newData.sort((a,b) => a.id - b.id);
+    setFilterData(newData);
+  }
 
-    //filtering
-    const filterByAuthor=(text)=>{
-        const newData = [...props.data];
-        const newFilteredData = newData.filter(item =>{
-            const textData = text.toUpperCase();
-            const itemData = item.author.toUpperCase();  
-            return itemData.indexOf(textData) > -1;
-        });
-        setFilterData(newFilteredData);
-    }
+  const sortDataByAuthor=()=>{
+    const newData = [...props.data];
+    newData.sort((a,b) => {
+      if(a.author > b.author) return 1;
+      else if(a.author < b.author) return -1;
+      else return 0;
+    });
+    setFilterData(newData);
+  }    
 
-    const bottomMenu = showSearchBar
-        ? <SearchBar 
-            onPressCancel = {()=>{setShowSearchBar(false); filterByAuthor('');}}
-            onChangeHandler = {(text)=>{setFilterText(text); filterByAuthor(text);}}
-            value={filterText}
-        />
-        : <ListButtons 
-        onPressSearch={()=>setShowSearchBar(true)}
+  //filtering
+  const filterByAuthor=(text)=>{
+    const newData = [...props.data];
+    const newFilteredData = newData.filter(item =>{
+      const textData = text.toUpperCase();
+      const itemData = item.author.toUpperCase();  
+      return itemData.indexOf(textData) > -1;
+    });
+    setFilterData(newFilteredData);
+  }
+
+  const onPressCancelHandler=()=>{
+    setShowSearchBar(false);
+    filterByAuthor('');
+  };
+
+  const onChangeTextHandler=(text)=>{
+    setFilterText(text);
+    filterByAuthor(text);
+  };
+
+  const bottomMenu = showSearchBar
+    ? <SearchBar 
+        onPressCancel = {onPressCancelHandler}
+        onChangeText = {(text)=>onChangeTextHandler(text)}
+        value={filterText}
+      />
+    : <ListButtons 
         onPressSortAuthor={sortDataByAuthor}
         onPressSortId={sortDataById}
-        />;
+        onPressSearch={()=>setShowSearchBar(true)}
+      />;
 
-    return(
-        <View style={styles.container}>
-            <View style={styles.listView}>
-            <FlatList
-                data = {filterData}
-                contentContainerStyle = {styles.list}
-                renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-                refreshing={isLoading}
-                onRefresh={props.fetchDataMethod}
-                ListEmptyComponent = {<EmptyListComponent/>}
-            />
-            </View>
-            <View style={styles.buttons}>
-                {bottomMenu}
-            </View>
-        </View>
-    );
+  return(
+    <View style={styles.container}>
+      <View style={styles.listView}>
+        <FlatList
+          data = {filterData}
+          contentContainerStyle = {styles.list}
+          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+          refreshing={props.isLoading}
+          onRefresh={props.fetchDataMethod}
+          ListEmptyComponent = {<EmptyListComponent/>}
+        />
+      </View>
+      <View style={styles.buttons}>
+        {bottomMenu}
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -105,3 +117,5 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
     },
   });
+
+  export default ListCompHooks;

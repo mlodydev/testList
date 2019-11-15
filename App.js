@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 
-import ListComp from './modules/ListComp';
 import ListCompHooks from './modules/ListCompHooks';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
@@ -12,7 +11,7 @@ const App = () =>{
 
   const fetchApiData=()=>{
     setIsLoading(true);
-    fetch(props.url)
+    fetch(DATA_URL)
         .then(response => response.json())
             .then(responseJson => {
                 setIsLoading(false);
@@ -26,8 +25,7 @@ const App = () =>{
   }, []);
 
   return(
-    // <ListComp url={DATA_URL}/>
-    <ListCompHooks url={DATA_URL} isLoading={isLoading} data={data} fetchDataMethod={fetchApiData}/>
+    <ListCompHooks isLoading={isLoading} data={data} fetchDataMethod={fetchApiData} />
   );
 }
 
