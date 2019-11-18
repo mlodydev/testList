@@ -1,125 +1,32 @@
-import React, {Component} from 'react';
-import {
-  View,
-  FlatList,
-  Text,
-  ActivityIndicator,
-  StyleSheet
-} from 'react-native';  
+import React, {useState, useEffect} from 'react';
 
-import ListItem from './modules/ListItem';
-import ListButtons from './modules/ListButtons';
+import ListCompHooks from './modules/ListCompHooks';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
-class App extends Component{
-  constructor(props){
-    super(props);
+const App = () =>{
 
-    this.state = {
-      data: null,
-      isLoading: false,
-    };
-    this.fetchApiData = this.fetchApiData.bind(this);
-    this.sortDataByAuthor = this.sortDataByAuthor.bind(this);
-    this.sortDataById = this.sortDataById.bind(this);
-    this.handleRefresh = this.handleRefresh.bind(this);
-  };
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  fetchApiData(){
-    this.setState({
-      isLoading: true,
-    })
+  const fetchApiData=()=>{
+    setIsLoading(true);
     fetch(DATA_URL)
-    .then(response => response.json())
-    .then(responseJson => {
-      this.setState({
-        data: responseJson,
-        isLoading: false,
-      })
+        .then(response => response.json())
+            .then(responseJson => {
+                setIsLoading(false);
+                setData(responseJson);
     })
     .catch((error) => console.warn(error));
-  };
-
-  componentDidMount(){
-    this.fetchApiData();
-  };
-
-  sortDataById(){
-    const newData = [...this.state.data];
-    newData.sort((a,b) => a.id - b.id);
-    this.setState({
-      data: newData,
-    });
-  };
-  
-  sortDataByAuthor(){
-    const newData = [...this.state.data];
-    newData.sort((a,b) => {
-      if(a.author > b.author) return 1;
-      else if(a.author < b.author) return -1;
-      else return 0;
-    });
-    this.setState({
-      data: newData,
-    });
-  };
-
-  handleRefresh(){
-    this.setState({
-      refreshing: true,
-    }, ()=> this.fetchApiData()
-    );
-  };
-
-  render(){
-    // const body = this.state.isLoading
-    // ? <View style={styles.loadingIndicator}>
-    //     <ActivityIndicator size='large' color='#058cd9' show={this.state.isLoading}/>
-    //   </View>
-    // : <FlatList
-    // const body =
-    // <FlatList
-    //     data = {this.state.data}
-    //     refreshing = {this.state.isLoading}
-    //     onRefresh = {this.handleRefresh}
-    //     renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-    //   />
-    return(
-      <View style={styles.container}>
-        <View style={styles.body}>
-          {/* {body} */}
-          <FlatList
-        data = {this.state.data}
-        refreshing = {this.state.isLoading}
-        onRefresh = {this.handleRefresh}
-        show = {!this.state.isLoading}
-        renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
-      />
-        </View>
-        <View style={styles.buttons}>
-          <ListButtons onPressRefresh={this.fetchApiData} onPressSortAuthor={this.sortDataByAuthor} onPressSortId={this.sortDataById} />  
-        </View>
-      </View>
-    );
   }
-}
+  
+  useEffect(()=>{
+    fetchApiData();
+  }, []);
 
-const styles = StyleSheet.create({
-  loadingIndicator: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container:{
-    flex: 1,
-  },
-  body: {
-    flex: 1,
-  },
-  buttons: {
-    flex: 0.1,
-  },
-});
+  return(
+    <ListCompHooks isLoading={isLoading} data={data} fetchDataMethod={fetchApiData} />
+  );
+}
 
 export default App;

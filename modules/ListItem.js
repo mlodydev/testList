@@ -3,9 +3,8 @@ import {View, Text, Image, StyleSheet, Linking} from 'react-native';
 
 const ListItem =(props)=>{
 
-    const onPressHandler=()=>{
-        Linking.openURL(props.pageUrl).catch((error) => console.warn(error));
-        
+    onPressHandler(){
+        Linking.openURL(this.props.pageUrl).catch((error) => console.warn(error));   
     }
 
     return(
@@ -59,10 +58,10 @@ const styles = StyleSheet.create({
         marginRight: 5,
     },  
     name: {
+        flex: 1,
         fontWeight: 'bold',
         fontSize: 22,
         flexWrap: 'wrap',
-        flex: 1,
     },
     idView: {
         borderRadius: 90,
