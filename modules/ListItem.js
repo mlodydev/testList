@@ -3,8 +3,8 @@ import {View, Text, Image, StyleSheet, Linking} from 'react-native';
 
 const ListItem =(props)=>{
 
-    onPressHandler(){
-        Linking.openURL(this.props.pageUrl).catch((error) => console.warn(error));   
+    const onPressHandler=()=>{
+        Linking.openURL(props.pageUrl).catch((error) => console.warn(error));   
     }
 
     return(
