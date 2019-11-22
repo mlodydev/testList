@@ -6,6 +6,7 @@ import {
     FlatList,
     StyleSheet,
   } from 'react-native';
+import { connect } from 'react-redux';
 
 import ListItem from './ListItem';
 import ListButtons from './ListButtons';
@@ -117,5 +118,4 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
     },
   });
-
-  export default ListCompHooks;
+export default ListCompHooks;
