@@ -2,6 +2,7 @@ import React, {Component, useEffect,useState} from 'react';
 import ListCompHooks from './ListCompHooks';
 import { connect } from 'react-redux';
 import { setFetchState, setApiData } from '../redux/reducers/listData/actions';
+import { bindActionCreators } from 'redux';  
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
@@ -12,12 +13,12 @@ class MainScreen extends Component{
   }
 
   fetchApiData(){
-    this.props.dispatch(setFetchState(true));
+    this.props.setFetchState(true);
     fetch(DATA_URL)
       .then(response => response.json())
         .then(responseJson => {
-          this.props.dispatch(setApiData(responseJson));
-          this.props.dispatch(setFetchState(false));
+          this.props.setApiData(responseJson);
+          this.props.setFetchState(false);
     })
     .catch((error) => console.warn(error));
   }
@@ -32,11 +33,17 @@ class MainScreen extends Component{
   }
 }
 
-function mapStateToProps(state){
+const mapStateToProps = (state) => {
   return{
     data: state.data,
     isFetching: state.isFetching
-  };
+  }
 }
 
-export default connect(mapStateToProps)(MainScreen);
+const mapDispatchToProps = (dispatch) => {
+  return(
+    bindActionCreators({setApiData, setFetchState}, dispatch)
+  );
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
