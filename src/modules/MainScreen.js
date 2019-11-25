@@ -1,49 +1,49 @@
 import React, {Component, useEffect,useState} from 'react';
 import ListCompHooks from './ListCompHooks';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setFetchState, setApiData } from '../redux/reducers/listData/actions';
 import { bindActionCreators } from 'redux';  
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
-class MainScreen extends Component{
-  constructor(props){
-    super(props);
-    this.fetchApiData = this.fetchApiData.bind(this);
-  }
+const MainScreen = (props) => {
 
-  fetchApiData(){
-    this.props.setFetchState(true);
+  const data = useSelector(state => state.data)
+  const isFetching = useSelector(state => state.isFetching)
+  const dispatch = useDispatch();
+
+  
+
+  const fetchApiData = () =>{
+    dispatch(setFetchState(true));
     fetch(DATA_URL)
       .then(response => response.json())
         .then(responseJson => {
-          this.props.setApiData(responseJson);
-          this.props.setFetchState(false);
+          dispatch(setApiData(responseJson));
+          dispatch(setFetchState(false));
     })
     .catch((error) => console.warn(error));
   }
-  componentDidMount(){
-    this.fetchApiData();
-  }
 
-  render(){
-    return(
-        <ListCompHooks isLoading={this.props.isFetching} data={this.props.data} fetchDataMethod={this.fetchApiData} />
-    );
-  }
-}
 
-const mapStateToProps = (state) => {
-  return{
-    data: state.data,
-    isFetching: state.isFetching
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
   return(
-    bindActionCreators({setApiData, setFetchState}, dispatch)
+      <ListCompHooks isLoading={isFetching} data={data} fetchDataMethod={fetchApiData} />
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+// const mapStateToProps = (state) => {
+//   return{
+//     data: state.data,
+//     isFetching: state.isFetching
+//   }
+// }
+
+// const mapDispatchToProps = (dispatch) => {
+//   return(
+//     bindActionCreators({setApiData, setFetchState}, dispatch)
+//   );
+// }
+
+// export default connect(mapStateToProps, mapDispatchToProps)(MainScreen);
+export default MainScreen;
