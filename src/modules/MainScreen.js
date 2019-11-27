@@ -1,25 +1,20 @@
-import React, { useEffect, useCallback} from 'react';
+import React, { useEffect} from 'react';
 import ListCompHooks from './ListCompHooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFetchState, setApiData } from '../redux/reducers/listData/actions';
+import { useNavigation } from 'react-navigation-hooks'
+import { getActiveChildNavigationOptions } from 'react-navigation';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 
-const MainScreen = () => {
+const MainContainer = () => {
 
   const data = useSelector(state => state.data)
   const isFetching = useSelector(state => state.isFetching)
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-  const setData = useCallback(
-    (data) => dispatch(setApiData(data)),
-    [dispatch]
-  )
-
-  const setFetching = useCallback(
-    (isFetching) => dispatch(setFetchState(isFetching)),
-    [dispatch]
-  )
+  const setData = (data) => dispatch(setApiData(data))
+  const setFetching = (isFetching) => dispatch(setFetchState(isFetching))
 
   const fetchApiData = () =>{
     setFetching(true);
@@ -31,14 +26,25 @@ const MainScreen = () => {
     })
     .catch((error) => console.warn(error));
   }
-
-  useEffect( ()=>{
-    fetchApiData()
-  }, [])
+  const { navigate } = useNavigation()
 
   return(
-      <ListCompHooks isLoading={isFetching} data={data} fetchDataMethod={fetchApiData} />
+    <MainScreen isFetching={isFetching} data={data} fetchApiData={fetchApiData} navigation={navigate}/>
   );
 }
 
-export default MainScreen;
+const MainScreen = (props) => {
+
+  useEffect( ()=>{
+    props.fetchApiData()
+  }, [])
+
+  return(
+      <ListCompHooks isLoading={props.isFetching} data={props.data} fetchDataMethod={props.fetchApiData} navigation={props.navigation} />
+  );
+}
+
+MainContainer.navigationOptions = {
+  header: null,
+}
+export default MainContainer;

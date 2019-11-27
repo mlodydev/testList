@@ -86,7 +86,7 @@ const ListCompHooks = (props) =>{
         <FlatList
           data = {filterData}
           contentContainerStyle = {styles.list}
-          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url}/>}
+          renderItem={({item}) => <ListItem id={item.id} imageUrl={item.download_url} name={item.author} pageUrl={item.url} navigation={props.navigation} />}
           refreshing={props.isLoading}
           onRefresh={props.fetchDataMethod}
           ListEmptyComponent = {<EmptyListComponent/>}
