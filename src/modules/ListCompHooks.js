@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-import {
-    View,
-    Text,
-    FlatList,
-    StyleSheet,
-  } from 'react-native';
-import { connect } from 'react-redux';
-
+import { View, Text, FlatList, StyleSheet, } from 'react-native';
 import ListItem from './ListItem';
 import ListButtons from './ListButtons';
 import SearchBar from './SearchBar';
@@ -48,6 +40,7 @@ const ListCompHooks = (props) =>{
   }    
 
   //filtering
+
   const filterByAuthor=(text)=>{
     const newData = [...props.data];
     const newFilteredData = newData.filter(item =>{

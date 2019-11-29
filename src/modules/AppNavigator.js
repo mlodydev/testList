@@ -8,7 +8,10 @@ const AppNavigator = createStackNavigator(
         Main: MainScreen,
         OpenBrowser: InternalBrowser
     },
-)
+    {
+        initialRouteName: 'Main'
+    }
+);
 
 const App = createAppContainer(AppNavigator)
 

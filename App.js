@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MainScreen from './src/modules/MainScreen'
 import { Provider } from 'react-redux';
 import { store } from './src/redux/createStore';
 import AppNavigator from './src/modules/AppNavigator'

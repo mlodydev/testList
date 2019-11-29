@@ -1,30 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { WebView } from 'react-native-webview';
 import { useNavigationParam } from 'react-navigation-hooks';
-import HeaderMenu from './HeaderMenu';
-import { StyleSheet, View } from 'react-native';
-import { Options } from './HeaderMenu';
+import { StyleSheet } from 'react-native';
 import MaterialHeaderMenu from './MaterialHeaderMenu';
 
-var paramsUri="";
 const InternalBrowser = () => {
-    paramsUri = useNavigationParam('uri');
+    const paramsUri = useNavigationParam('uri');
     return(
-        <WebView 
+        <WebView
             source = {{uri: paramsUri}}
             style = {styles.web}
         />
     );
 }
 
-InternalBrowser.navigationOptions = {
+InternalBrowser.navigationOptions = screenProps => ({
     headerRight: () => (
-    // put here whole Menu component- icon and menu componenet
-    // <HeaderMenu link={paramsUri}/>
-    <MaterialHeaderMenu link={paramsUri}/>
+    <MaterialHeaderMenu link={screenProps.navigation.getParam('uri')}/>
     )
     
-}
+});
 
 const styles = StyleSheet.create({
     container:{

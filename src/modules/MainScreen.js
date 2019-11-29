@@ -3,7 +3,6 @@ import ListCompHooks from './ListCompHooks';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFetchState, setApiData } from '../redux/reducers/listData/actions';
 import { useNavigation } from 'react-navigation-hooks'
-import { getActiveChildNavigationOptions } from 'react-navigation';
 
 const DATA_URL = 'https://picsum.photos/v2/list';
 

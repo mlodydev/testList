@@ -12,7 +12,7 @@ const Options=(props) =>{
             Back
         </Text>
     </View>
-    :<View></View>
+    :(null)
   );
 }
 

@@ -1,7 +1,6 @@
 import React from 'react';
- 
-import { View, Text, Image, Linking, TouchableOpacity } from 'react-native';
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+import { View, Image, Linking, TouchableOpacity } from 'react-native';
+import Menu, { MenuItem } from 'react-native-material-menu';
  
 class MaterialHeaderMenu extends React.PureComponent {
   constructor(props){
@@ -42,6 +41,7 @@ class MaterialHeaderMenu extends React.PureComponent {
       </View>
     );
   }
+
 }
  
 export default MaterialHeaderMenu;
