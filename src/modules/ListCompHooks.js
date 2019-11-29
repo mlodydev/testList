@@ -15,7 +15,7 @@ import SearchBar from './SearchBar';
 const EmptyListComponent =()=>(
     <View style={styles.emptyList}>
       <Text>
-        No items in list.
+        Welcome! Wait for content.
       </Text>
     </View>
   );
