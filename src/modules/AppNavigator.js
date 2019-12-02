@@ -1,18 +1,18 @@
-import { createAppContainer } from 'react-navigation'
-import { createStackNavigator } from 'react-navigation-stack'
-import MainScreen from './MainScreen'
-import InternalBrowser from './InternalBrowser'
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import MainScreen from './Screens/MainScreen/MainScreen';
+import InternalBrowserScreen from './Screens/InternalBrowserScreen';
 
 const AppNavigator = createStackNavigator(
-    {
-        Main: MainScreen,
-        OpenBrowser: InternalBrowser
-    },
-    {
-        initialRouteName: 'Main'
-    }
+  {
+    Main: MainScreen,
+    InternalBrowser: InternalBrowserScreen,
+  },
+  {
+    initialRouteName: 'Main',
+  },
 );
 
-const App = createAppContainer(AppNavigator)
+const App = createAppContainer(AppNavigator);
 
-export default App
+export default App;
