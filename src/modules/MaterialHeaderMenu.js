@@ -19,13 +19,17 @@ class MaterialHeaderMenu extends React.PureComponent {
   showMenu = () => {
     this._menu.show();
   };
+
+  onPressBrowserHandler = () =>{
+    this.hideMenu();
+    Linking.openURL(this.props.link).catch((error) => console.warn(error));
+  }
  
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Menu
           ref={this.setMenuRef}
-        //   button={<Text onPress={this.showMenu} style={{marginRight: 20}}>Menu</Text>}
           button={
             <TouchableOpacity onPress={this.showMenu} style={{padding: 5, marginRight: 20}}>
                 <Image 
@@ -35,8 +39,8 @@ class MaterialHeaderMenu extends React.PureComponent {
             </TouchableOpacity>
           }
         >
-          <MenuItem onPress={()=>Linking.openURL(this.props.link).catch((error) => console.warn(error))}>Open in external browser</MenuItem>
           <MenuItem onPress={this.hideMenu}>Close</MenuItem>
+          <MenuItem onPress={this.onPressBrowserHandler}>Open in external browser</MenuItem>
         </Menu>
       </View>
     );

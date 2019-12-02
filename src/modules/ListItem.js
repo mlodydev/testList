@@ -1,10 +1,9 @@
 import React from 'react';
-import {View, Text, Image, StyleSheet, Linking} from 'react-native';
+import {View, Text, Image, StyleSheet} from 'react-native';
 
 const ListItem =(props)=>{
 
     const onPressHandler=()=>{
-        // Linking.openURL(props.pageUrl).catch((error) => console.warn(error));   
         props.navigation('OpenBrowser', {uri: props.pageUrl});
     }
 

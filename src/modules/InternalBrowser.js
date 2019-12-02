@@ -17,8 +17,7 @@ const InternalBrowser = () => {
 InternalBrowser.navigationOptions = screenProps => ({
     headerRight: () => (
     <MaterialHeaderMenu link={screenProps.navigation.getParam('uri')}/>
-    )
-    
+    ) 
 });
 
 const styles = StyleSheet.create({

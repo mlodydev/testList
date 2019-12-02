@@ -15,7 +15,7 @@ const EmptyListComponent =()=>(
 const ListCompHooks = (props) =>{
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [filterText, setFilterText] = useState('');
-  const [filterData, setFilterData] = useState(props.data);   
+  const [filterData, setFilterData] = useState(props.data);
 
   useEffect(()=>{
     setFilterData(props.data);
@@ -50,6 +50,8 @@ const ListCompHooks = (props) =>{
     });
     setFilterData(newFilteredData);
   }
+
+  //
 
   const onPressCancelHandler=()=>{
     setShowSearchBar(false);
